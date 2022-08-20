@@ -1,7 +1,6 @@
 require "sinatra"
 require "sinatra/content_for"
 require "tilt/erubis"
-require "pry-byebug"
 
 require_relative "database_persistence"
 
@@ -74,6 +73,10 @@ end
 
 before do
   @storage = DatabasePersistence.new(logger)
+end
+
+after do
+  @storage.disconnect
 end
 
 get "/" do
