@@ -127,10 +127,10 @@ end
 post "/lists/:id" do
   list_name = params[:list_name].strip
   id = params[:id].to_i
-  # @list = load_list(id)
-
+  
   error = error_for_list_name(list_name)
   if error
+    @list = load_list(id)
     session[:error] = error
     erb :edit_list, layout: :layout
   else
@@ -157,11 +157,11 @@ end
 # Add a new todo to a list
 post "/lists/:list_id/todos" do
   @list_id = params[:list_id].to_i
-  # @list = load_list(@list_id)
   text = params[:todo].strip
-
+  
   error = error_for_todo(text)
   if error
+    @list = load_list(@list_id)
     session[:error] = error
     erb :list, layout: :layout
   else
